@@ -18,15 +18,13 @@ content:
       - { name: email, label: Email address, type: string }
       - { name: linkedin, label: LinkedIn URL, type: string }
       - { name: resume, label: Résumé PDF, type: file }
-      - name: intros
-        label: Section descriptions
-        type: object
-        fields:
-          - { name: projects, label: Projects, type: text }
-          - { name: essays, label: Essays + Research, type: text }
-          - { name: experience, label: Experience, type: text }
-          - { name: sketchbook, label: Sketchbook, type: text }
-          - { name: misc, label: Miscellaneous, type: text }
+  - name: projects-page
+    label: "Projects · page text"
+    type: file
+    path: src/data/pages/projects.json
+    format: json
+    fields:
+      - { name: intro, label: Description (shown under the page title), type: text }
   - name: projects
     label: Projects
     type: collection
@@ -45,6 +43,13 @@ content:
       - { name: role, label: Role (for Experience), type: string }
       - { name: draft, label: Hide from site (draft), type: boolean, default: false }
       - { name: body, label: Body, type: rich-text }
+  - name: essays-page
+    label: "Essays + Research · page text"
+    type: file
+    path: src/data/pages/essays.json
+    format: json
+    fields:
+      - { name: intro, label: Description (shown under the page title), type: text }
   - name: essays
     label: Essays + Research
     type: collection
@@ -63,6 +68,13 @@ content:
       - { name: role, label: Role (for Experience), type: string }
       - { name: draft, label: Hide from site (draft), type: boolean, default: false }
       - { name: body, label: Body, type: rich-text }
+  - name: experience-page
+    label: "Experience · page text"
+    type: file
+    path: src/data/pages/experience.json
+    format: json
+    fields:
+      - { name: intro, label: Description (shown under the page title), type: text }
   - name: experience
     label: Experience
     type: collection
@@ -81,6 +93,13 @@ content:
       - { name: role, label: Role (for Experience), type: string }
       - { name: draft, label: Hide from site (draft), type: boolean, default: false }
       - { name: body, label: Body, type: rich-text }
+  - name: sketchbook-page
+    label: "Sketchbook · page text"
+    type: file
+    path: src/data/pages/sketchbook.json
+    format: json
+    fields:
+      - { name: intro, label: Description (shown under the page title), type: text }
   - name: sketchbook
     label: Sketchbook
     type: collection
@@ -99,6 +118,13 @@ content:
       - { name: role, label: Role (for Experience), type: string }
       - { name: draft, label: Hide from site (draft), type: boolean, default: false }
       - { name: body, label: Body, type: rich-text }
+  - name: misc-page
+    label: "Miscellaneous · page text"
+    type: file
+    path: src/data/pages/misc.json
+    format: json
+    fields:
+      - { name: intro, label: Description (shown under the page title), type: text }
   - name: misc
     label: Miscellaneous
     type: collection
