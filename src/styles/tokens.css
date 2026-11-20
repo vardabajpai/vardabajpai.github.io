@@ -1,0 +1,48 @@
+/* ==========================================================
+   DESIGN TOKENS — change the look of the whole site here.
+   Every page and component reads from these variables.
+   ========================================================== */
+:root {
+  /* Color */
+  --color-bg: #ffffff;
+  --color-ink: #111111;
+  --color-muted: #555555;
+  --color-rule: #111111;
+  --color-rule-soft: #d4d4d4;
+  --color-placeholder: #e8e8e8;
+  --color-accent: #d92a0f;
+
+  /* Type families (loaded in src/layouts/Base.astro) */
+  --font-display: 'Inter Tight', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+
+  /* Type scale */
+  --size-name: clamp(72px, 9vw, 136px);
+  --size-page-title: clamp(56px, 7vw, 112px);
+  --size-section-link: clamp(26px, 2.6vw, 36px);
+  --size-body: 16px;
+  --size-label: 12px;
+
+  /* Weights */
+  --weight-display: 800;
+  --weight-subhead: 500;
+  --weight-label: 500;
+
+  /* Letter spacing */
+  --tracking-display: -0.04em;
+  --tracking-label: 0.08em;
+
+  /* Layout */
+  --pad-x: 40px;
+  --pad-y: 28px;
+  --gap-section: 64px;
+  --max-text: 480px;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --pad-x: 20px;
+    --pad-y: 20px;
+    --gap-section: 48px;
+  }
+}

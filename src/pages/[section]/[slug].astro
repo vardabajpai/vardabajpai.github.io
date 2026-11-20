@@ -1,0 +1,52 @@
+---
+// One template renders every individual entry (/projects/my-thing/, ...).
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import SectionHeader from '../../components/SectionHeader.astro';
+import Footer from '../../components/Footer.astro';
+import { sections } from '../../data/site';
+
+export async function getStaticPaths() {
+  const paths = [];
+  for (const section of sections) {
+    const entries = await getCollection(section.slug, (e) => !e.data.draft);
+    for (const entry of entries) {
+      paths.push({ params: { section: section.slug, slug: entry.id }, props: { section, entry } });
+    }
+  }
+  return paths;
+}
+
+const { section, entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<Base title={d.title} description={d.summary}>
+  <div class="page">
+    <SectionHeader current={section.slug} />
+
+    <main class="main">
+      <a class="label muted back" href={`/${section.slug}/`}>← {section.title}</a>
+      <h1 class="display entry-title">{d.title}</h1>
+      <p class="label muted meta">
+        {d.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}
+        {d.role && <> · {d.role}</>}
+        {d.tags.length > 0 && <> · {d.tags.join(', ')}</>}
+      </p>
+      {d.summary && <p class="summary">{d.summary}</p>}
+      {d.image && <img class="cover" src={d.image} alt="" />}
+      <article class="prose"><Content /></article>
+      {d.link && <a class="label accent" href={d.link}>View externally ↗</a>}
+    </main>
+
+    <Footer />
+  </div>
+</Base>
+
+<style>
+  .main { flex: 1; display: flex; flex-direction: column; gap: 20px; }
+  .entry-title { font-size: clamp(40px, 5vw, 80px); line-height: 0.95; }
+  .meta { margin: 0; }
+  .summary { margin: 0; font-size: 20px; max-width: 680px; }
+  .cover { margin: 16px 0; max-height: 70vh; object-fit: cover; }
+</style>

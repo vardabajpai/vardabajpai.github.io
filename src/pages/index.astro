@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+import Footer from '../components/Footer.astro';
+import { site, sections } from '../data/site';
+---
+<Base>
+  <div class="page home">
+    <header class="bar label">
+      <span>Portfolio <span class="accent" aria-hidden="true">●</span> {site.year}</span>
+      <nav aria-label="Contact">
+        <a href={site.links.email}>Email</a>
+        <a href={site.links.linkedin} rel="me">LinkedIn</a>
+        <a href={site.links.resume}>Résumé ↓</a>
+      </nav>
+    </header>
+
+    <main class="grid">
+      <div class="intro">
+        <h1 class="display name">
+          {site.name.split(' ').map((w, i) => (<>{i > 0 && <br />}{w}</>))}
+        </h1>
+        <div class="about">
+          {site.headshot
+            ? <img class="headshot" src={site.headshot} alt={`Portrait of ${site.name}`} width="88" height="110" />
+            : <div class="headshot placeholder" aria-hidden="true"></div>}
+          <div class="about-text">
+            <p class="bio">{site.bio}</p>
+            <p class="label muted">{site.location} — {site.coordinates}</p>
+          </div>
+        </div>
+      </div>
+
+      <nav class="sections" aria-label="Sections">
+        {sections.map((s) => (
+          <a href={`/${s.slug}/`}>
+            <span class="label accent">{s.num}</span>
+            <span class="section-title">{s.title}</span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        ))}
+      </nav>
+    </main>
+
+    <Footer />
+  </div>
+</Base>
+
+<style>
+  .home { justify-content: space-between; }
+  .bar { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+  .bar nav { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
+    gap: 56px 80px;
+    align-items: end;
+  }
+  .intro { display: flex; flex-direction: column; gap: 32px; min-width: 0; }
+  .name { font-size: var(--size-name); line-height: 0.86; }
+
+  .about { display: flex; gap: 20px; align-items: flex-start; }
+  .headshot { flex: 0 0 88px; width: 88px; height: 110px; object-fit: cover; }
+  .placeholder { background: var(--color-placeholder); }
+  .about-text { display: flex; flex-direction: column; gap: 12px; max-width: 360px; }
+  .bio { margin: 0; }
+  .about-text .label { margin: 0; }
+
+  .sections { display: flex; flex-direction: column; border-top: 2px solid var(--color-rule); min-width: 0; }
+  .sections a {
+    display: flex; align-items: baseline; gap: 20px;
+    padding: 14px 0; border-bottom: 1px solid var(--color-rule);
+  }
+  .section-title {
+    flex: 1;
+    font-family: var(--font-display);
+    font-weight: var(--weight-subhead);
+    font-size: var(--size-section-link);
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+  .arrow { font-size: 20px; transition: transform 0.2s ease; }
+  .sections a:hover .arrow { transform: translateX(4px); }
+  @media (prefers-reduced-motion: reduce) { .arrow { transition: none; } }
+</style>

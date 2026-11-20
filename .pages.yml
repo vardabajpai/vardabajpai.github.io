@@ -1,0 +1,110 @@
+# Config for Pages CMS (https://pagescms.org): a free web editor for this repo.
+media:
+  input: public/images
+  output: /images
+
+content:
+  - name: site
+    label: Site settings
+    type: file
+    path: src/data/site.json
+    format: json
+    fields:
+      - { name: name, label: Name, type: string }
+      - { name: bio, label: Bio, type: text }
+      - { name: location, label: Location, type: string }
+      - { name: coordinates, label: Coordinates, type: string }
+      - { name: headshot, label: Headshot, type: image }
+      - { name: email, label: Email address, type: string }
+      - { name: linkedin, label: LinkedIn URL, type: string }
+      - { name: resume, label: Résumé PDF, type: file }
+  - name: projects
+    label: Projects
+    type: collection
+    path: src/content/projects
+    filename: "{primary}.md"
+    exclude: [_template.md]
+    view:
+      fields: [title, date, draft]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: date, label: Date, type: date, required: true }
+      - { name: summary, label: One-line summary, type: string }
+      - { name: image, label: Cover image, type: image }
+      - { name: tags, label: Tags, type: string, list: true }
+      - { name: link, label: External link, type: string }
+      - { name: role, label: Role (for Experience), type: string }
+      - { name: draft, label: Hide from site (draft), type: boolean, default: false }
+      - { name: body, label: Body, type: rich-text }
+  - name: essays
+    label: Essays + Research
+    type: collection
+    path: src/content/essays
+    filename: "{primary}.md"
+    exclude: [_template.md]
+    view:
+      fields: [title, date, draft]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: date, label: Date, type: date, required: true }
+      - { name: summary, label: One-line summary, type: string }
+      - { name: image, label: Cover image, type: image }
+      - { name: tags, label: Tags, type: string, list: true }
+      - { name: link, label: External link, type: string }
+      - { name: role, label: Role (for Experience), type: string }
+      - { name: draft, label: Hide from site (draft), type: boolean, default: false }
+      - { name: body, label: Body, type: rich-text }
+  - name: experience
+    label: Experience
+    type: collection
+    path: src/content/experience
+    filename: "{primary}.md"
+    exclude: [_template.md]
+    view:
+      fields: [title, date, draft]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: date, label: Date, type: date, required: true }
+      - { name: summary, label: One-line summary, type: string }
+      - { name: image, label: Cover image, type: image }
+      - { name: tags, label: Tags, type: string, list: true }
+      - { name: link, label: External link, type: string }
+      - { name: role, label: Role (for Experience), type: string }
+      - { name: draft, label: Hide from site (draft), type: boolean, default: false }
+      - { name: body, label: Body, type: rich-text }
+  - name: sketchbook
+    label: Sketchbook
+    type: collection
+    path: src/content/sketchbook
+    filename: "{primary}.md"
+    exclude: [_template.md]
+    view:
+      fields: [title, date, draft]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: date, label: Date, type: date, required: true }
+      - { name: summary, label: One-line summary, type: string }
+      - { name: image, label: Cover image, type: image }
+      - { name: tags, label: Tags, type: string, list: true }
+      - { name: link, label: External link, type: string }
+      - { name: role, label: Role (for Experience), type: string }
+      - { name: draft, label: Hide from site (draft), type: boolean, default: false }
+      - { name: body, label: Body, type: rich-text }
+  - name: misc
+    label: Miscellaneous
+    type: collection
+    path: src/content/misc
+    filename: "{primary}.md"
+    exclude: [_template.md]
+    view:
+      fields: [title, date, draft]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: date, label: Date, type: date, required: true }
+      - { name: summary, label: One-line summary, type: string }
+      - { name: image, label: Cover image, type: image }
+      - { name: tags, label: Tags, type: string, list: true }
+      - { name: link, label: External link, type: string }
+      - { name: role, label: Role (for Experience), type: string }
+      - { name: draft, label: Hide from site (draft), type: boolean, default: false }
+      - { name: body, label: Body, type: rich-text }

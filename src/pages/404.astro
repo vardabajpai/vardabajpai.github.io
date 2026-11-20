@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base title="Not found">
+  <div class="page">
+    <main style="flex:1; display:flex; flex-direction:column; gap:24px; justify-content:center;">
+      <h1 class="display" style="font-size: var(--size-page-title); line-height: 0.9;">404</h1>
+      <p>That page doesn't exist (yet). <a class="accent" href="/">Go home →</a></p>
+    </main>
+    <Footer />
+  </div>
+</Base>
