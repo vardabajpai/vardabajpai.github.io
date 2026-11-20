@@ -21,13 +21,14 @@ export const site = {
 };
 
 // Order here = order on the home page and in the nav.
+// Intro lines are edited in site.json (Pages CMS → Site settings → Section descriptions).
 // `slug` must match a folder in src/content/ and a collection in src/content.config.ts.
 export const sections = [
-  { num: '01', slug: 'projects',   title: 'Projects',          intro: "Things I've built, designed, and shipped." },
-  { num: '02', slug: 'essays',     title: 'Essays + Research', intro: 'Writing on technology, ethics, and policy.' },
-  { num: '03', slug: 'experience', title: 'Experience',        intro: "Where I've worked and what I've led." },
-  { num: '04', slug: 'sketchbook', title: 'Sketchbook',        intro: 'Drawings, studies, and unfinished ideas.' },
-  { num: '05', slug: 'misc',       title: 'Miscellaneous',     intro: "Everything that doesn't fit anywhere else." },
+  { num: '01', slug: 'projects',   title: 'Projects',          intro: data.intros.projects },
+  { num: '02', slug: 'essays',     title: 'Essays + Research', intro: data.intros.essays },
+  { num: '03', slug: 'experience', title: 'Experience',        intro: data.intros.experience },
+  { num: '04', slug: 'sketchbook', title: 'Sketchbook',        intro: data.intros.sketchbook },
+  { num: '05', slug: 'misc',       title: 'Miscellaneous',     intro: data.intros.misc },
 ] as const;
 
 export type Section = (typeof sections)[number];

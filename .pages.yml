@@ -18,6 +18,15 @@ content:
       - { name: email, label: Email address, type: string }
       - { name: linkedin, label: LinkedIn URL, type: string }
       - { name: resume, label: Résumé PDF, type: file }
+      - name: intros
+        label: Section descriptions
+        type: object
+        fields:
+          - { name: projects, label: Projects, type: text }
+          - { name: essays, label: Essays + Research, type: text }
+          - { name: experience, label: Experience, type: text }
+          - { name: sketchbook, label: Sketchbook, type: text }
+          - { name: misc, label: Miscellaneous, type: text }
   - name: projects
     label: Projects
     type: collection
