@@ -11,10 +11,15 @@ export function getStaticPaths() {
 }
 
 const { section } = Astro.props as { section: Section };
-const entries = (await getCollection(section.slug, (e) => !e.data.draft))
+const all = await getCollection(section.slug);
+// The "★ Page description" entry supplies the intro line and is not listed.
+const pageEntry = all.find((e) => e.id === 'page-description');
+const intro = pageEntry?.data.summary ?? section.intro;
+const entries = all
+  .filter((e) => e.id !== 'page-description' && !e.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
-<Base title={section.title} description={section.intro}>
+<Base title={section.title} description={intro}>
   <div class="page">
     <SectionHeader current={section.slug} />
 
@@ -23,7 +28,7 @@ const entries = (await getCollection(section.slug, (e) => !e.data.draft))
         <span class="label accent">{section.num}</span>
         <h1 class="display page-title">{section.title}</h1>
       </div>
-      <p class="intro">{section.intro}</p>
+      <p class="intro">{intro}</p>
 
       {entries.length === 0 ? (
         <div class="empty label muted">Coming soon</div>

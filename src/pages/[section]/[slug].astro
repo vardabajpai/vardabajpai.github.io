@@ -9,7 +9,7 @@ import { sections } from '../../data/site';
 export async function getStaticPaths() {
   const paths = [];
   for (const section of sections) {
-    const entries = await getCollection(section.slug, (e) => !e.data.draft);
+    const entries = await getCollection(section.slug, (e) => !e.data.draft && e.id !== 'page-description');
     for (const entry of entries) {
       paths.push({ params: { section: section.slug, slug: entry.id }, props: { section, entry } });
     }

@@ -4,11 +4,6 @@
 // ==========================================================
 
 import data from './site.json';
-import projectsPage from './pages/projects.json';
-import essaysPage from './pages/essays.json';
-import experiencePage from './pages/experience.json';
-import sketchbookPage from './pages/sketchbook.json';
-import miscPage from './pages/misc.json';
 
 
 // Edit site.json (or "Site settings" in Pages CMS) — not this block.
@@ -27,14 +22,15 @@ export const site = {
 };
 
 // Order here = order on the home page and in the nav.
-// Intro lines are edited in src/data/pages/<slug>.json (Pages CMS → "<Section> · page text").
+// Intro lines: edit the "★ Page description" entry in each section (src/content/<slug>/page-description.md).
+// The intro below is only a fallback if that entry is missing.
 // `slug` must match a folder in src/content/ and a collection in src/content.config.ts.
 export const sections = [
-  { num: '01', slug: 'projects',   title: 'Projects',          intro: projectsPage.intro },
-  { num: '02', slug: 'essays',     title: 'Essays + Research', intro: essaysPage.intro },
-  { num: '03', slug: 'experience', title: 'Experience',        intro: experiencePage.intro },
-  { num: '04', slug: 'sketchbook', title: 'Sketchbook',        intro: sketchbookPage.intro },
-  { num: '05', slug: 'misc',       title: 'Miscellaneous',     intro: miscPage.intro },
+  { num: '01', slug: 'projects',   title: 'Projects',          intro: "Things I've built, designed, and shipped." },
+  { num: '02', slug: 'essays',     title: 'Essays + Research', intro: "Writing on technology, ethics, and policy." },
+  { num: '03', slug: 'experience', title: 'Experience',        intro: "Where I've worked and what I've led." },
+  { num: '04', slug: 'sketchbook', title: 'Sketchbook',        intro: "Drawings, studies, and unfinished ideas." },
+  { num: '05', slug: 'misc',       title: 'Miscellaneous',     intro: "Everything that doesn't fit anywhere else." },
 ] as const;
 
 export type Section = (typeof sections)[number];
