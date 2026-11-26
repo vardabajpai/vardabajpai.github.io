@@ -9,11 +9,27 @@ const site = JSON.parse(await readFile('src/data/site.json', 'utf8'));
 const base = (site.substack || '').replace(/\/$/, '');
 if (!base) { console.log('No Substack URL set; skipping.'); process.exit(0); }
 
-const xml = process.env.FEED_FILE
-  ? await readFile(process.env.FEED_FILE, 'utf8')
-  : await (await fetch(`${base}/feed`)).text();
+async function getFeed() {
+  if (process.env.FEED_FILE) return readFile(process.env.FEED_FILE, 'utf8');
+  // Substack's CDN rejects requests that don't look like a normal browser/feed reader.
+  const res = await fetch(`${base}/feed`, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (compatible; PortfolioFeedReader/1.0; +https://vardabajpai.github.io)',
+      Accept: 'application/rss+xml, application/xml;q=0.9, */*;q=0.8',
+    },
+  });
+  const text = await res.text();
+  console.log(`feed: HTTP ${res.status}, ${text.length} bytes`);
+  if (!res.ok || !text.includes('<rss')) {
+    console.error('Did not get an RSS feed. First 200 chars:', text.slice(0, 200));
+    process.exit(1);
+  }
+  return text;
+}
+const xml = await getFeed();
 let items = new XMLParser().parse(xml)?.rss?.channel?.item ?? [];
 if (!Array.isArray(items)) items = [items];
+console.log(`feed has ${items.length} item(s)`);
 
 const yaml = (v) => JSON.stringify(String(v ?? ''));
 const clean = (html) => String(html ?? '').replace(/<script[\s\S]*?<\/script>/gi, '');
