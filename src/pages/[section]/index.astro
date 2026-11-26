@@ -43,7 +43,7 @@ if (section.slug === 'essays') {
         <h1 class="display page-title">{section.title}</h1>
       </div>
       <p class="intro">{intro}</p>
-      {groups.map((g) => <EntryList heading={g.heading} items={g.items} />)}
+      {groups.map((g) => <EntryList heading={g.heading} items={g.items} showSummary={section.slug !== 'essays'} />)}
     </main>
 
     <Footer />

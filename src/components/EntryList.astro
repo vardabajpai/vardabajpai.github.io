@@ -7,8 +7,8 @@ export interface Item {
   summary?: string;
   external?: boolean;
 }
-interface Props { items: Item[]; heading?: string; emptyText?: string }
-const { items, heading, emptyText = 'Coming soon' } = Astro.props;
+interface Props { items: Item[]; heading?: string; emptyText?: string; showSummary?: boolean }
+const { items, heading, emptyText = 'Coming soon', showSummary = true } = Astro.props;
 ---
 <section class="group">
   {heading && <h2 class="label group-heading">{heading}</h2>}
@@ -21,7 +21,7 @@ const { items, heading, emptyText = 'Coming soon' } = Astro.props;
           <a href={e.href} {...(e.external ? { target: '_blank', rel: 'noopener' } : {})}>
             <span class="label muted">{e.date.getFullYear()}</span>
             <span class="entry-title">{e.title}{e.external && <span class="ext" aria-label="(opens Substack)"> ↗</span>}</span>
-            {e.summary && <span class="summary">{e.summary}</span>}
+            {showSummary && e.summary && <span class="summary">{e.summary}</span>}
           </a>
         </li>
       ))}
