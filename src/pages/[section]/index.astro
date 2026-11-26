@@ -28,7 +28,7 @@ let groups: { heading?: string; items: Item[] }[];
 if (section.slug === 'essays') {
   const writing = entries.filter((e) => e.data.category !== 'research').map(toItem).sort(byDate);
   const research = entries.filter((e) => e.data.category === 'research').map(toItem).sort(byDate);
-  groups = [{ heading: 'Research', items: research }, { heading: 'Writing', items: writing }];
+  groups = [{ heading: 'Research', items: research }, { heading: 'Personal writing', items: writing }];
 } else {
   groups = [{ items: entries.map(toItem).sort(byDate) }];
 }
