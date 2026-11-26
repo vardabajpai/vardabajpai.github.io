@@ -18,6 +18,8 @@ content:
       - { name: email, label: Email address, type: string }
       - { name: linkedin, label: LinkedIn URL, type: string }
       - { name: resume, label: Résumé PDF, type: file }
+      - { name: substack, label: Substack URL (posts auto-import to Essays), type: string }
+      - { name: substackName, label: Substack publication name, type: string }
   - name: projects
     label: Projects
     type: collection
@@ -52,6 +54,8 @@ content:
       - { name: tags, label: Tags, type: string, list: true }
       - { name: link, label: External link, type: string }
       - { name: role, label: Role (for Experience), type: string }
+      - { name: source_url, label: Originally published at (URL), type: string }
+      - { name: category, label: Writing or Research, type: select, options: { values: [writing, research] } }
       - { name: draft, label: Hide from site (draft), type: boolean, default: false }
       - { name: body, label: Body, type: rich-text }
   - name: experience

@@ -4,7 +4,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import Footer from '../../components/Footer.astro';
-import { sections } from '../../data/site';
+import { sections, site } from '../../data/site';
 
 export async function getStaticPaths() {
   const paths = [];
@@ -21,7 +21,7 @@ const { section, entry } = Astro.props;
 const { Content } = await render(entry);
 const d = entry.data;
 ---
-<Base title={d.title} description={d.summary}>
+<Base title={d.title} description={d.summary} canonical={d.source_url}>
   <div class="page">
     <SectionHeader current={section.slug} />
 
@@ -37,6 +37,9 @@ const d = entry.data;
       {d.image && <img class="cover" src={d.image} alt="" />}
       <article class="prose"><Content /></article>
       {d.link && <a class="label accent" href={d.link}>View externally ↗</a>}
+      {d.source_url && (
+        <p class="label muted source">Originally published in <a class="accent" href={d.source_url}>{site.substackName} ↗</a></p>
+      )}
     </main>
 
     <Footer />
@@ -48,5 +51,6 @@ const d = entry.data;
   .entry-title { font-size: clamp(40px, 5vw, 80px); line-height: 0.95; }
   .meta { margin: 0; }
   .summary { margin: 0; font-size: 20px; max-width: 680px; }
+  .source { margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--color-rule-soft); }
   .cover { margin: 16px 0; max-height: 70vh; object-fit: cover; }
 </style>

@@ -14,6 +14,8 @@ const entry = z.object({
   image: optText, // e.g. '/images/friday-cover.jpg'
   link: optText,  // external link (GitHub, publication, video)
   role: optText,  // useful for Experience entries
+  source_url: optText, // original post (e.g. Substack); shown as a link at the bottom
+  category: z.preprocess(blank, z.enum(['writing', 'research']).optional()), // Essays only
   draft: z.preprocess(blank, z.boolean().default(false)), // true = hidden
 });
 

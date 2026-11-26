@@ -5,10 +5,11 @@ import { site } from '../data/site';
 interface Props {
   title?: string;
   description?: string;
+  canonical?: string; // set to the original URL for cross-posted pieces
 }
-const { title, description = site.bio } = Astro.props;
+const { title, description = site.bio, canonical: canonicalOverride } = Astro.props;
 const fullTitle = title ? `${title} — ${site.name}` : `${site.name} — Portfolio`;
-const canonical = new URL(Astro.url.pathname, Astro.site);
+const canonical = canonicalOverride ?? new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
 <html lang="en">

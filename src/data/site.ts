@@ -18,6 +18,8 @@ export const site = {
     linkedin: data.linkedin,
     resume: data.resume || '#',
   },
+  substack: (data.substack || '').replace(/\/$/, ''), // e.g. https://name.substack.com
+  substackName: data.substackName || 'Substack',
   year: new Date().getFullYear(),
 };
 
