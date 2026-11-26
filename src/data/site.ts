@@ -30,9 +30,8 @@ export const site = {
 export const sections = [
   { num: '01', slug: 'projects',   title: 'Projects',          intro: "Things I've built, designed, and shipped." },
   { num: '02', slug: 'essays',     title: 'Essays + Research', intro: "Writing on technology, ethics, and policy." },
-  { num: '03', slug: 'experience', title: 'Experience',        intro: "Where I've worked and what I've led." },
-  { num: '04', slug: 'sketchbook', title: 'Sketchbook',        intro: "Drawings, studies, and unfinished ideas." },
-  { num: '05', slug: 'misc',       title: 'Miscellaneous',     intro: "Everything that doesn't fit anywhere else." },
+  { num: '03', slug: 'sketchbook', title: 'Sketchbook',        intro: "Drawings, studies, and unfinished ideas." },
+  { num: '04', slug: 'misc',       title: 'Miscellaneous',     intro: "Everything that doesn't fit anywhere else." },
 ] as const;
 
 export type Section = (typeof sections)[number];

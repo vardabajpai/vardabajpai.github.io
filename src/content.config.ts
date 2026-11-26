@@ -13,7 +13,7 @@ const entry = z.object({
   tags: z.preprocess(blank, z.array(z.string()).default([])),
   image: optText, // e.g. '/images/friday-cover.jpg'
   link: optText,  // external link (GitHub, publication, video)
-  role: optText,  // useful for Experience entries
+  role: optText,
   source_url: optText, // original post (e.g. Substack); shown as a link at the bottom
   category: z.preprocess(blank, z.enum(['writing', 'research']).optional()), // Essays only
   draft: z.preprocess(blank, z.boolean().default(false)), // true = hidden
@@ -29,7 +29,6 @@ const make = (folder: string) =>
 export const collections = {
   projects: make('projects'),
   essays: make('essays'),
-  experience: make('experience'),
   sketchbook: make('sketchbook'),
   misc: make('misc'),
 };
