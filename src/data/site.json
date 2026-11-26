@@ -1,8 +1,9 @@
 {
   "name": "Jasmine Bajpai",
-  "bio": "Working where emerging technology meets art, ethics, and policy. Data science & emerging tech at NYU Gallatin; minor in public policy & management.",
+  "bio": "Studying emerging tech. and data science at NYU Gallatin; minor in public policy & management.",
   "location": "New York, NY",
   "coordinates": "40.73° N, 73.99° W",
+<<<<<<< HEAD
   "headshot": "",
   "email": "you@example.com",
   "linkedin": "https://www.linkedin.com/in/your-handle",
@@ -10,3 +11,8 @@
   "substack": "https://meowzaworld.substack.com",
   "substackName": "tamasha"
 }
+=======
+  "email": "vardabajpai@gmail.com",
+  "linkedin": "https://www.linkedin.com/in/vardabajpai"
+}
+>>>>>>> 60621f5ef9b13b3b7f70a63f82d65006a3aa07d9
