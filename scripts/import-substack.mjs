@@ -9,26 +9,36 @@ const site = JSON.parse(await readFile('src/data/site.json', 'utf8'));
 const base = (site.substack || '').replace(/\/$/, '');
 if (!base) { console.log('No Substack URL set; skipping.'); process.exit(0); }
 
-async function getFeed() {
-  if (process.env.FEED_FILE) return readFile(process.env.FEED_FILE, 'utf8');
-  // Substack's CDN rejects requests that don't look like a normal browser/feed reader.
-  const res = await fetch(`${base}/feed`, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (compatible; PortfolioFeedReader/1.0; +https://vardabajpai.github.io)',
-      Accept: 'application/rss+xml, application/xml;q=0.9, */*;q=0.8',
-    },
-  });
-  const text = await res.text();
-  console.log(`feed: HTTP ${res.status}, ${text.length} bytes`);
-  if (!res.ok || !text.includes('<rss')) {
-    console.error('Did not get an RSS feed. First 200 chars:', text.slice(0, 200));
-    process.exit(1);
-  }
-  return text;
+const UA = 'Mozilla/5.0 (compatible; PortfolioFeedReader/1.0; +https://vardabajpai.github.io)';
+
+// Returns a list of { title, link, pubDate, description, content }.
+async function getItems() {
+  if (process.env.FEED_FILE) return parseRss(await readFile(process.env.FEED_FILE, 'utf8'));
+
+  // 1) Direct from Substack.
+  try {
+    const res = await fetch(`${base}/feed`, { headers: { 'User-Agent': UA, Accept: 'application/rss+xml, */*' } });
+    const text = await res.text();
+    console.log(`direct feed: HTTP ${res.status}, ${text.length} bytes`);
+    if (res.ok && text.includes('<rss')) return parseRss(text);
+  } catch (e) { console.log('direct feed failed:', e.message); }
+
+  // 2) Substack often blocks cloud servers (like GitHub's), so fall back to a
+  //    public feed-reading service that fetches it for us.
+  const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(base + '/feed')}`, { headers: { 'User-Agent': UA } });
+  const data = await res.json();
+  console.log(`rss2json: HTTP ${res.status}, status=${data.status}, ${data.items?.length ?? 0} item(s)`);
+  if (data.status !== 'ok') { console.error('Could not read the feed:', data.message ?? ''); process.exit(1); }
+  return data.items.map((i) => ({ title: i.title, link: i.link, pubDate: i.pubDate.replace(' ', 'T') + 'Z', description: i.description, content: i.content }));
 }
-const xml = await getFeed();
-let items = new XMLParser().parse(xml)?.rss?.channel?.item ?? [];
-if (!Array.isArray(items)) items = [items];
+
+function parseRss(xml) {
+  let items = new XMLParser().parse(xml)?.rss?.channel?.item ?? [];
+  if (!Array.isArray(items)) items = [items];
+  return items.map((i) => ({ title: i.title, link: i.link, pubDate: i.pubDate, description: i.description, content: i['content:encoded'] }));
+}
+
+const items = await getItems();
 console.log(`feed has ${items.length} item(s)`);
 
 const yaml = (v) => JSON.stringify(String(v ?? ''));
@@ -43,7 +53,7 @@ for (const i of items) {
   try { await access(file); continue; } catch {}
   const date = new Date(i.pubDate).toISOString().slice(0, 10);
   const summary = String(i.description ?? '').replace(/<[^>]+>/g, '').trim();
-  const body = clean(i['content:encoded'] ?? i.description);
+  const body = clean(i.content || i.description);
   await writeFile(file, `---
 title: ${yaml(i.title)}
 date: ${date}
